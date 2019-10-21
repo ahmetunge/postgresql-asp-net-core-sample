@@ -2,7 +2,7 @@ using System;
 
 namespace EfCoreDatabasesTest.Models
 {
-    public class Book : EntityBase<Guid>
+    public class Book : EntityBase<Guid>,IEntity
     {
         public string Name { get; set; }
         public string Summary { get; set; }
