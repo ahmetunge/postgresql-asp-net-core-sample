@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EfCoreDatabasesTest.Migrations
 {
     [DbContext(typeof(EfCorePostgresContext))]
-    [Migration("20191020163512_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20191021182604_CreateNewMigration")]
+    partial class CreateNewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,10 +30,7 @@ namespace EfCoreDatabasesTest.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("text");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("CategoryId1")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -44,7 +41,7 @@ namespace EfCoreDatabasesTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
                 });
@@ -67,7 +64,9 @@ namespace EfCoreDatabasesTest.Migrations
                 {
                     b.HasOne("EfCoreDatabasesTest.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

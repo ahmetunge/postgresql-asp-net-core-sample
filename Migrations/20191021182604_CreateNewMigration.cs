@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EfCoreDatabasesTest.Migrations
 {
-    public partial class InitialMigrations : Migration
+    public partial class CreateNewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,24 +27,23 @@ namespace EfCoreDatabasesTest.Migrations
                     Name = table.Column<string>(nullable: true),
                     Summary = table.Column<string>(nullable: true),
                     Author = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    CategoryId1 = table.Column<Guid>(nullable: true)
+                    CategoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Books_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Books_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_CategoryId1",
+                name: "IX_Books_CategoryId",
                 table: "Books",
-                column: "CategoryId1");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
